@@ -74,7 +74,7 @@ public class PostagemController {
 		Optional<Postagem> postagem = postagemRepository.findById(id);
 
 		if (postagem.isEmpty())
-			throw new ResponseStatusException(HttpStatus.NO_CONTENT);
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		postagemRepository.deleteById(id);
 	}
 }
