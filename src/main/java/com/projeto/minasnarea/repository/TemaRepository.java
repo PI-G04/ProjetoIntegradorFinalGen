@@ -4,10 +4,9 @@ import java.util.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 
+import com.projeto.minasnarea.model.Tema;
 
-import com.projeto.minasnarea.model.Minas;
-
-public interface TemaRepository extends JpaRepository<Minas, Long>  {
+public interface TemaRepository extends JpaRepository<Tema, Long>  {
 	
-	public List <Minas> findAllByDescricaoContainingIgnoreCase(@Param("descricao") String descricao);
+	public List <Tema> findAllByDescricaoContainingIgnoreCase(@Param("descricao") String descricao);
 }
