@@ -4,16 +4,18 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -27,8 +29,9 @@ public class Usuario {
 	@Size(min= 5, max= 30 , message = "O nome deve conter no minimo 5 caracteres")
 	private String nome;
 	
-	@NotBlank(message = "Usuario é obrigatorio, por favor preencha(Exemplo: minasnaarea@email.com)")
-	@Size(min= 5, max= 100 , message = "O usuario deve conter no minimo 5 caracteres")
+	@Schema(example = "email@email.com.br")
+	@NotNull(message = "Usuario é obrigatorio, por favor preencha")
+	@Email( message = "O usuario deve ser um email válido")
 	private String usuario;
 	
 	@NotBlank(message = "Senha é obrigatorio, por favor preencha!")
@@ -37,7 +40,7 @@ public class Usuario {
 	
 	private String foto;
 	
-	@OneToMany(fetch = FetchType.LAZY , mappedBy = "usuario"  )
+	@OneToMany(fetch = FetchType.LAZY , mappedBy = "usuario", cascade = CascadeType.REMOVE )
 	@JsonIgnoreProperties("usuario")
 	private List<Postagem> postagem;
 
@@ -80,4 +83,13 @@ public class Usuario {
 	public void setFoto(String foto) {
 		this.foto = foto;
 	}
+
+	public List<Postagem> getPostagem() {
+		return postagem;
+	}
+
+	public void setPostagem(List<Postagem> postagem) {
+		this.postagem = postagem;
+	}
+	
 }
